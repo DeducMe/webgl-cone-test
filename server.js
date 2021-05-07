@@ -7,12 +7,12 @@ var bodyParser = require('body-parser');
 
 app.set('port', (process.env.PORT || 5000));
 var server = http.createServer(app);
-app.use(express.static(path.join(__dirname, '../front')));
+app.use(express.static(path.join(__dirname, './front')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, '../front', 'index.html')))
+app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, './front', 'index.html')))
 
 
 function calculateCone ({height, radius, segments}){
