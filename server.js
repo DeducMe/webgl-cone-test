@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 const path = require('path');
-const THREE = require("three")
+const THREE = require("./front/three/three.module")
 var http = require('http');
 var bodyParser = require('body-parser');
 
