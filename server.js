@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 const path = require('path');
-const THREE = require("./front/three/three.module")
+const THREE = require("three")
 var http = require('http');
 var bodyParser = require('body-parser');
 
@@ -24,7 +24,6 @@ function calculateCone ({height, radius, segments}){
 
     const positions = new Float32Array( N * 3 * 3 );
     const normals = new Float32Array( N * 3 * 3);
-    const colors = new Float32Array( N * 3 * 3 );
 
     const pA = new THREE.Vector3();
     const pB = new THREE.Vector3();
@@ -63,14 +62,13 @@ function calculateCone ({height, radius, segments}){
         positions[ shiftedIndex + 8 ] = t.z;
 
 
-        // // flat face normals
+        // flat face normals
 
         pA.set( f.x, f.y, f.z );
         pB.set( s.x, s.y, s.y );
         pC.set( t.x, t.y, t.z );
         cb.subVectors( pC, pB );
         ab.subVectors( pA, pB );
-        cb.cross( ab );
 
         cb.normalize();
 
@@ -90,23 +88,9 @@ function calculateCone ({height, radius, segments}){
         normals[ shiftedIndex + 7 ] = ny;
         normals[ shiftedIndex + 8 ] = nz;
 
-        // colors
-
-
-        colors[ shiftedIndex ] = color.r;
-        colors[ shiftedIndex + 1 ] = color.g;
-        colors[ shiftedIndex + 2 ] = color.b;
-
-        colors[ shiftedIndex + 3 ] = color.r;
-        colors[ shiftedIndex + 4 ] = color.g;
-        colors[ shiftedIndex + 5 ] = color.b;
-
-        colors[ shiftedIndex + 6 ] = color.r;
-        colors[ shiftedIndex + 7 ] = color.g;
-        colors[ shiftedIndex + 8 ] = color.b;
     }
 
-    return {positions, normals, colors}
+    return {positions, normals}
 }
 
 app.post('/post',function(req, res){
